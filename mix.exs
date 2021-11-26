@@ -22,8 +22,9 @@ defmodule ListJobs.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:finch, "~> 0.3.0"},
-      {:jason, "~> 1.2"}
+      {:finch, "~> 0.9"},
+      {:jason, "~> 1.2"},
+      {:websockex, "~> 0.4.3"}
     ]
   end
 end

@@ -10,6 +10,7 @@ defmodule ListJobs.Application do
     children = [
       # Starts a worker by calling: ListJobs.Worker.start_link(arg)
       # {ListJobs.Worker, arg}
+      ListJobs.ZuulClient.child_spec()
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
