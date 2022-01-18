@@ -10,7 +10,10 @@ defmodule ListJobs.Application do
     children = [
       # Starts a worker by calling: ListJobs.Worker.start_link(arg)
       # {ListJobs.Worker, arg}
-      ListJobs.ZuulClient.child_spec()
+      {ListJobs.JobOutput, name: ListJobs.JobOutput},
+      ListJobs.ZuulClient.child_spec(),
+      ListJobs.ZuulStatus,
+      {DynamicSupervisor, name: ListJobs.OngoingJobs, strategy: :one_for_one}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
