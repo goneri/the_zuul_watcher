@@ -43,7 +43,7 @@ defmodule ListJobs.ZuulStatus do
       true -> []
       false ->
         Enum.flat_map(list_change_queues(), fn x -> x["heads"] end)
-        |> Enum.reduce(fn x, acc -> x ++ acc end)
+        |> Enum.reduce([], fn x, acc -> x ++ acc end)
     end
   end
 
