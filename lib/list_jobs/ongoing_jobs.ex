@@ -1,14 +1,24 @@
 defmodule ListJobs.OngoingJobs do
-  use Supervisor
+  use DynamicSupervisor
 
   def start_link(_default) do
-    Supervisor.start_link(__MODULE__, :ok, name: :ongoing_jobs)
+    DynamicSupervisor.start_link(__MODULE__, :ok, name: __MODULE__)
   end
 
-  @impl true
-  def init(:ok) do
-    children = []
-
-    Supervisor.init(children, strategy: :one_for_one)
+  def init(:no_args) do
+    DynamicSupervisor.init(strategy: :one_for_one)
   end
+
+  def add_worker(url, uuid) do
+    DynamicSupervisor.start_child(__MODULE__, {ListJobs.ZuulWebSocket,  [url: url, uuid: uuid]})
+  end
+
+  def list_running() do
+    Enum.map(DynamicSupervisor.which_children(__MODULE__), fn worker -> get_info(worker) end)
+  end
+
+  def get_info({_, pid, :worker, _}) do
+    Process.info(pid)
+  end
+
 end

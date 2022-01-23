@@ -1,19 +1,21 @@
-defmodule ZuulWebSocket do
+defmodule ListJobs.ZuulWebSocket do
   use WebSockex
 
-  def start(url, build_uuid, state) do
-    IO.puts("connecting")
-    {:ok, pid} = WebSockex.start(url, __MODULE__, state)
-    :sys.trace(pid, true)
-    WebSockex.send_frame(pid, {:text, "{\"uuid\": \"#{build_uuid}\", \"logfile\": \"console.log\"}"})
+  def start_link(url: url, uuid: uuid) do
+    IO.puts("connecting - start_link")
+    IO.inspect String.to_atom("build-#{uuid}")
+    state = %{}
+    name = String.to_atom("build-#{uuid}")
+    IO.puts("Starting #{name}")
+    {:ok, pid} = WebSockex.start_link(url, __MODULE__, state, [name: name])
+    #:sys.trace(pid, true)
+    WebSockex.send_frame(pid, {:text, "{\"uuid\": \"#{uuid}\", \"logfile\": \"console.log\"}"})
     {:ok, pid}
   end
 
   def handle_frame({type, msg}, state) do
     case type do
       :text ->
-        IO.puts("Push to JobOutput")
-        #IO.inspect Elixir.ListJobs.JobOutput
         IO.puts("msg -> #{msg}")
         GenServer.cast(ListJobs.JobOutput, {:insert, msg})
       _ ->

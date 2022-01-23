@@ -40,7 +40,8 @@ defmodule ListJobs.ZuulClient do
         IO.puts("in progress")
         IO.puts(job["uuid"])
         IO.puts(job["result"])
-        ZuulWebSocket.start("wss://#{api_host()}#{api_path()}/console-stream", job["uuid"], %{debug: [:trace]})
+        #ZuulWebSocket.start("wss://#{api_host()}#{api_path()}/console-stream", job["uuid"], %{debug: [:trace]})
+        ListJobs.OngoingJobs.add_worker("wss://#{api_host()}#{api_path()}/console-stream", job["uuid"])
         #ListJobs.OngoingJobs,{Agent, ZuulWebSocket.start("wss://#{api_host()}#{api_path()}/console-stream", job["uuid"], %{debug: [:trace]})
         #DynamicSupervisor.start_child(ListJobs.OngoingJobs,ZuulWebSocket.start, "wss://#{api_host()}#{api_path()}/console-stream", job["uuid"], %{debug: [:trace]})
     end
