@@ -28,14 +28,14 @@ defmodule ListJobs.JobOutput do
 
   def save_results(uuid, data) do
     {:ok, file} = File.open "#{uuid}.log", [:append, {:delayed_write, 100, 20}]
-    #Enum.each(data, &(IO.binwrite(file, &1)))
+    #IO.binwrite(file, "\nSAVING MORE #{uuid}\n")
     IO.binwrite(file, data)
     File.close file
   end
 
   @impl true
   def handle_info(:work, state) do
-    Enum.each(state, fn {uuid, msg} -> save_results(uuid, msg) end)
+    Enum.each(Enum.reverse(state), fn {uuid, msg} -> save_results(uuid, msg) end)
     schedule_work()
     IO.puts("#{Enum.count(state)} messages saved")
     {:noreply, []}

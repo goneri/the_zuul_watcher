@@ -16,7 +16,8 @@ defmodule ListJobs.ZuulClient do
      name: __MODULE__,
      pools: %{
        "https://%{api_host}" => [size: pool_size()]
-     }}
+     }
+    }
   end
 
   def pool_size, do: 25
@@ -39,11 +40,7 @@ defmodule ListJobs.ZuulClient do
       nil ->
         IO.puts("in progress")
         IO.puts(job["uuid"])
-        IO.puts(job["result"])
-        #ZuulWebSocket.start("wss://#{api_host()}#{api_path()}/console-stream", job["uuid"], %{debug: [:trace]})
         ListJobs.OngoingJobs.add_worker("wss://#{api_host()}#{api_path()}/console-stream", job["uuid"])
-        #ListJobs.OngoingJobs,{Agent, ZuulWebSocket.start("wss://#{api_host()}#{api_path()}/console-stream", job["uuid"], %{debug: [:trace]})
-        #DynamicSupervisor.start_child(ListJobs.OngoingJobs,ZuulWebSocket.start, "wss://#{api_host()}#{api_path()}/console-stream", job["uuid"], %{debug: [:trace]})
     end
   end
   
