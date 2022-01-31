@@ -14,21 +14,17 @@ defmodule ListJobs.JobOutput do
 
   @impl true
   def init(stack) do
-    IO.puts("Init!")
-    IO.inspect self()
     schedule_work()
     {:ok, stack}
   end
 
   @impl true
   def handle_cast({:insert, uuid, msg}, state) do
-    #IO.puts("insert message #{msg}")
     {:noreply, [{uuid, msg} | state]}
   end
 
   def save_results(uuid, data) do
     {:ok, file} = File.open "#{uuid}.log", [:append, {:delayed_write, 100, 20}]
-    #IO.binwrite(file, "\nSAVING MORE #{uuid}\n")
     IO.binwrite(file, data)
     File.close file
   end

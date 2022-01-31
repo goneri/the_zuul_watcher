@@ -2,11 +2,8 @@ defmodule ListJobs.ZuulWebSocket do
   use WebSockex
 
   def start_link(url: url, uuid: uuid) do
-    IO.puts("connecting - start_link")
-    IO.inspect String.to_atom("build-#{uuid}")
     state = %{"uuid" => uuid}
     name = String.to_atom("build-#{uuid}")
-    IO.puts("Starting #{name}")
     {:ok, pid} = WebSockex.start_link(url, __MODULE__, state, [name: name])
     #:sys.trace(pid, true)
     {:ok, _} = WebSockex.send_frame(pid, {:text, "{\"uuid\": \"#{uuid}\", \"logfile\": \"console.log\"}"})
