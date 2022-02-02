@@ -2,13 +2,11 @@ defmodule ListJobs.ZuulClient do
   alias Finch.Response
 
   def api_host do
-    "dashboard.zuul.ansible.com"
-    #"ansible.softwarefactory-project.io"
+    Application.fetch_env!(:list_jobs, :api_host)
   end
 
   def api_path do
-    "/api/tenant/ansible"
-    #"/zuul/api"
+    Application.fetch_env!(:list_jobs, :api_path)
   end
 
   def child_spec do
