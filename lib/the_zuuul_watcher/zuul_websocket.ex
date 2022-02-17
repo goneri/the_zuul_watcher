@@ -1,4 +1,4 @@
-defmodule ListJobs.ZuulWebSocket do
+defmodule TheZuulWatcher.ZuulWebSocket do
   use WebSockex
 
   def start_link(url: url, uuid: uuid) do
@@ -13,7 +13,7 @@ defmodule ListJobs.ZuulWebSocket do
   def handle_frame({type, msg}, state) do
     case type do
       :text ->
-        GenServer.cast(ListJobs.JobOutput, {:insert, state["uuid"], msg})
+        GenServer.cast(TheZuulWatcher.JobOutput, {:insert, state["uuid"], msg})
       _ ->
           IO.puts "Received Message - Type: #{inspect type} -- Message: #{inspect msg}"
     end

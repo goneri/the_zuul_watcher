@@ -1,4 +1,4 @@
-defmodule ListJobs.OngoingJobs do
+defmodule TheZuulWatcher.OngoingJobs do
   use DynamicSupervisor
 
   def start_link(_default) do
@@ -10,7 +10,7 @@ defmodule ListJobs.OngoingJobs do
   end
 
   def add_worker(url, uuid) do
-    DynamicSupervisor.start_child(__MODULE__, {ListJobs.ZuulWebSocket,  [url: url, uuid: uuid]})
+    DynamicSupervisor.start_child(__MODULE__, {TheZuulWatcher.ZuulWebSocket,  [url: url, uuid: uuid]})
   end
 
   def list_running() do

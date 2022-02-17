@@ -1,4 +1,4 @@
-defmodule ListJobs.ZuulStatus do
+defmodule TheZuulWatcher.ZuulStatus do
   use GenServer
 
   def api_host do
@@ -57,12 +57,12 @@ defmodule ListJobs.ZuulStatus do
     |> list_heads
     |> list_jobs
     |> list_ongoing_jobs
-    |> Enum.each(&ListJobs.ZuulClient.show_finished_job/1)
+    |> Enum.each(&TheZuulWatcher.ZuulClient.show_finished_job/1)
   end
 
 
   def start_link(_default) do
-    state = ListJobs.ZuulClient.get_status()
+    state = TheZuulWatcher.ZuulClient.get_status()
     GenServer.start_link(__MODULE__, state, name: :zuulstatus)
   end
 
@@ -74,7 +74,7 @@ defmodule ListJobs.ZuulStatus do
 
   @impl true
   def handle_info(:refresh, state) do
-    new_state = ListJobs.ZuulClient.get_status()
+    new_state = TheZuulWatcher.ZuulClient.get_status()
     schedule_refresh() # Reschedule once more
     case new_state do
       %{"zuul_version" => zuul_version} ->

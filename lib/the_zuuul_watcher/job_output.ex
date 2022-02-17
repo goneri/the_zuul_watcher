@@ -1,4 +1,4 @@
-defmodule ListJobs.JobOutput do
+defmodule TheZuulWatcher.JobOutput do
   use GenServer
 
 

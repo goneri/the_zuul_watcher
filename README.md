@@ -1,6 +1,7 @@
-# ListJobs
+# The Zuul Watcher
 
-**TODO: Add description**
+The Zuul Watcher connects to a Zuul instance and record the
+job output of all the jobs (websocket).
 
 ## Run
 

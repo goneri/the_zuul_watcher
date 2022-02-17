@@ -1,4 +1,4 @@
-defmodule ListJobs.ZuulClient do
+defmodule TheZuulWatcher.ZuulClient do
   alias Finch.Response
 
   def api_host do
@@ -38,7 +38,7 @@ defmodule ListJobs.ZuulClient do
       nil ->
         IO.puts("in progress")
         IO.puts(job["uuid"])
-        ListJobs.OngoingJobs.add_worker("wss://#{api_host()}#{api_path()}/console-stream", job["uuid"])
+        TheZuulWatcher.OngoingJobs.add_worker("wss://#{api_host()}#{api_path()}/console-stream", job["uuid"])
     end
   end
   

@@ -1,4 +1,4 @@
-defmodule ListJobs.MixProject do
+defmodule TheZuulWatcher.MixProject do
   use Mix.Project
 
   def project do
@@ -15,7 +15,7 @@ defmodule ListJobs.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {ListJobs.Application, []}
+      mod: {TheZuulWatcher.Application, []}
     ]
   end
 
