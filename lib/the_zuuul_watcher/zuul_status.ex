@@ -62,7 +62,7 @@ defmodule TheZuulWatcher.ZuulStatus do
 
 
   def start_link(_default) do
-    state = TheZuulWatcher.ZuulClient.get_status()
+    state = {}
     GenServer.start_link(__MODULE__, state, name: :zuulstatus)
   end
 
