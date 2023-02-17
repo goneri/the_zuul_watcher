@@ -9,4 +9,5 @@ end
 
 config :list_jobs,
   api_host: api_host,
-  api_path: api_path
+  api_path: api_path,
+  results_dir: "./results"

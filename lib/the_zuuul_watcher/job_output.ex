@@ -2,6 +2,9 @@ defmodule TheZuulWatcher.JobOutput do
   use GenServer
   require Logger
 
+  def results_dir do
+    Application.fetch_env!(:list_jobs, :results_dir)
+  end
 
   # Callbacks
   def start_link(_default) do
@@ -24,7 +27,7 @@ defmodule TheZuulWatcher.JobOutput do
   end
 
   def save_results(uuid, data) do
-    {:ok, file} = File.open "#{uuid}.log", [:append, {:delayed_write, 100, 20}]
+    {:ok, file} = File.open "#{results_dir()}/#{uuid}.log", [:append, {:delayed_write, 100, 20}]
     IO.binwrite(file, data)
     File.close file
   end
