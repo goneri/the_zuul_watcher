@@ -3,6 +3,13 @@
 The Zuul Watcher connects to a Zuul instance and record the
 job output of all the jobs (websocket).
 
+The application will that:
+
+1. poll the status page to list the ongoing jobs (every 10s)
+2. open a Websocket for reach of these jobs
+3. redirect the Websocket content to a local file in the ./results directory
+4. expose the log over HTTP, (e.g: http://my-host:3000/$build_uuid)
+
 ## Requirements
 
 ```
