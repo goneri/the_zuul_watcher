@@ -27,7 +27,7 @@ defmodule TheZuulWatcher.JobOutput do
   end
 
   def save_results(uuid, data) do
-    {:ok, file} = File.open "#{results_dir()}/#{uuid}.log", [:append, {:delayed_write, 100, 20}]
+    {:ok, file} = File.open "#{results_dir()}/#{uuid}", [:append, {:delayed_write, 100, 20}]
     IO.binwrite(file, data)
     File.close file
   end

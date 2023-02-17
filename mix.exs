@@ -24,7 +24,8 @@ defmodule TheZuulWatcher.MixProject do
     [
       {:finch, "~> 0.9"},
       {:jason, "~> 1.2"},
-      {:websockex, "~> 0.4.3"}
+      {:websockex, "~> 0.4.3"},
+      {:plug_cowboy, "~> 2.5"}
     ]
   end
 end
