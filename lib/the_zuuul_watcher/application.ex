@@ -16,7 +16,7 @@ defmodule TheZuulWatcher.Application do
       TheZuulWatcher.ZuulClient.child_spec(),
       TheZuulWatcher.ZuulStatus,
       {DynamicSupervisor, name: TheZuulWatcher.OngoingJobs, strategy: :one_for_one},
-      {Plug.Cowboy, scheme: :http, plug: {Plug.Static, at: "/", from: results_dir(), content_types: %{ "*" => "plain/text" }}, options: [port: 3000]}
+      {Plug.Cowboy, scheme: :http, plug: {Plug.Static, at: "/", from: results_dir(), headers: %{ "content-type" => "text/plain" }}, options: [port: 3000]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
