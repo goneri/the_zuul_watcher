@@ -3,12 +3,19 @@
 The Zuul Watcher connects to a Zuul instance and record the
 job output of all the jobs (websocket).
 
+## Requirements
+
+```
+sudo dnf install -y erlang erlang-xmerl elixir
+```
+
 ## Run
 
 Set the endpoint through the ZUUL environment:
 
 ```
-ZUUL=sf mix test  # for ansible.softwarefactory-project.io
+mix deps.get
+ZUUL=sf iex -S mix  # for ansible.softwarefactory-project.io
 ```
 
 ## Installation
