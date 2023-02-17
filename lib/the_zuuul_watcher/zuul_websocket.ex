@@ -1,5 +1,6 @@
 defmodule TheZuulWatcher.ZuulWebSocket do
   use WebSockex
+  require Logger
 
   def start_link(url: url, uuid: uuid) do
     state = %{"uuid" => uuid}
@@ -15,18 +16,18 @@ defmodule TheZuulWatcher.ZuulWebSocket do
       :text ->
         GenServer.cast(TheZuulWatcher.JobOutput, {:insert, state["uuid"], msg})
       _ ->
-          IO.puts "Received Message - Type: #{inspect type} -- Message: #{inspect msg}"
+          Logger.error("WebSocket/unexpected message - Type: #{inspect type} -- Message: #{inspect msg}")
     end
     {:ok, state}
   end
 
   def handle_call({:send, {type, msg} = frame}, state) do
-    IO.puts "Sending #{type} frame with payload: #{msg}"
+    Logger.debug("Sending #{type} frame with payload: #{msg}")
     {:reply, frame, state}
   end
 
   def terminate(reason, state) do
-    IO.puts("\nSocket Terminating:\n#{inspect reason}\n\n#{inspect state}\n")
+    Logger.info("\nSocket Terminating:\n#{inspect reason}\n\n#{inspect state}\n")
     exit(:normal)
   end
 end

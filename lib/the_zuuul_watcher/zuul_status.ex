@@ -1,5 +1,6 @@
 defmodule TheZuulWatcher.ZuulStatus do
   use GenServer
+  require Logger
 
   def api_host do
     "ansible.softwarefactory-project.io"
@@ -62,6 +63,7 @@ defmodule TheZuulWatcher.ZuulStatus do
 
 
   def start_link(_default) do
+    Logger.debug("Starting :zuulstatus")
     state = {}
     GenServer.start_link(__MODULE__, state, name: :zuulstatus)
   end
@@ -78,7 +80,7 @@ defmodule TheZuulWatcher.ZuulStatus do
     schedule_refresh() # Reschedule once more
     case new_state do
       %{"zuul_version" => zuul_version} ->
-        IO.puts("Zuul version: #{zuul_version}")
+        Logger.debug("Zuul version: #{zuul_version}")
         track_ongoing_jobs(new_state)
         {:noreply, new_state}
       _ ->

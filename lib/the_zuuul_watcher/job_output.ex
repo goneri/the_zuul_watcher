@@ -1,10 +1,10 @@
 defmodule TheZuulWatcher.JobOutput do
   use GenServer
+  require Logger
 
 
   # Callbacks
   def start_link(_default) do
-    IO.puts("JobOutput start_link #{__MODULE__}")
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
@@ -33,7 +33,7 @@ defmodule TheZuulWatcher.JobOutput do
   def handle_info(:work, state) do
     Enum.each(Enum.reverse(state), fn {uuid, msg} -> save_results(uuid, msg) end)
     schedule_work()
-    IO.puts("#{Enum.count(state)} messages saved")
+    Logger.debug("#{Enum.count(state)} messages saved")
     {:noreply, []}
   end
 

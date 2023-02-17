@@ -8,8 +8,6 @@ defmodule TheZuulWatcher.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: TheZuulWatcher.Worker.start_link(arg)
-      # {TheZuulWatcher.Worker, arg}
       {TheZuulWatcher.JobOutput, name: ListJobs.JobOutput},
       TheZuulWatcher.ZuulClient.child_spec(),
       TheZuulWatcher.ZuulStatus,

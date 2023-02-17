@@ -1,5 +1,6 @@
 defmodule TheZuulWatcher.ZuulClient do
   alias Finch.Response
+  require Logger
 
   def api_host do
     Application.fetch_env!(:list_jobs, :api_host)
@@ -33,11 +34,9 @@ defmodule TheZuulWatcher.ZuulClient do
   end
 
   def show_finished_job(job) do
-    IO.inspect job
     case job["result"] do
       nil ->
-        IO.puts("in progress")
-        IO.puts(job["uuid"])
+        Logger.debug("in progress #{job["uuid"]}")
         TheZuulWatcher.OngoingJobs.add_worker("wss://#{api_host()}#{api_path()}/console-stream", job["uuid"])
     end
   end
