@@ -11,8 +11,9 @@ sudo dnf install -y erlang erlang-xmerl elixir
 
 ## Run
 
-Set the endpoint through the ZUUL environment:
+Edit `config/config.exs` to adjust your Zuul instance location.
 
+Run the app with:
 ```
 mix deps.get
 ZUUL=sf iex -S mix  # for ansible.softwarefactory-project.io
